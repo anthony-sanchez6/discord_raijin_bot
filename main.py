@@ -1,5 +1,5 @@
 import logging
-from bot import run_bot
+from bot.bot import run_bot
 
 if __name__ == '__main__':
     logger = logging.getLogger(__name__)
