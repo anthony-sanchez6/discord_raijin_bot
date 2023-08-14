@@ -1,4 +1,4 @@
-
+from pprint import pprint
 class Event:
 
     def __init__(self,name_of_event, date='not set') -> None:
@@ -8,33 +8,32 @@ class Event:
     
     def as_String(self) -> str:
         string = f"""
-## {self.name_of_event}:
+# Event: **{self.name_of_event}**
 ————————————————————
-# When:
-- {self.date}
+## When: **{self.date}**
 ————————————————————
-# **Roles**:
+### **Roles**:
 **Tank:**
 """
         for user in self.roster:
              if user.get("role") == 'tank':
-                  string += f"- {user.get('name')}"
+                  string += f"- @{user.get('name')}"
         string += """
 **HEAL:**
 """
         for user in self.roster:
              if user.get("role") == 'heal':
-                  string += f"- {user.get('name')}"
+                  string += f"- @{user.get('name')}"
         string+="""
 **DPS:**
 """
 
         for user in self.roster:
              if user.get("role") == 'dps':
-                  string += f"- {user.get('name')}"
+                  string += f"- @{user.get('name')}"
         string+="""
 ————————————————————
-# React to join:
+### React to join:
 **Roles**
 - Tank = :shield:
 - DPS = :crossed_swords:
