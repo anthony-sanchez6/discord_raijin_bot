@@ -2,12 +2,13 @@ import discord
 from bot.responses import handle_response
 import logging
 from pprint import pprint
-from bot.reactions import reaction_handler
+from bot.reactions import reaction_add_handler, reaction_remove_handler
 
 logger = logging.getLogger(__name__)
 
 def run_bot():
-    TOKEN = 'MTEzOTk5NTg5ODI0MDMwMzE4NA.G1dEm3.JE09MFVYCmk6TedBLOjdv8rNOmJdlHRDTV9QZM'
+    with open('token.txt','r') as t:
+        TOKEN = t.read()
     intents = discord.Intents.default()
     intents.message_content = True
     client = discord.Client(intents=intents)
@@ -27,7 +28,13 @@ def run_bot():
     
     @client.event
     async def on_reaction_add(reaction, user):
-        new_content = reaction_handler(reaction=reaction,user=user)
+        new_content = reaction_add_handler(reaction=reaction,user=user)
+        message = await client.get_channel(reaction.message.channel.id).fetch_message(reaction.message.id)
+        await message.edit(content=new_content)
+
+    @client.event
+    async def on_raction_remove(reaction,user):
+        new_content = reaction_remove_handler(reaction=reaction,user=user)
         message = await client.get_channel(reaction.message.channel.id).fetch_message(reaction.message.id)
         await message.edit(content=new_content)
 
