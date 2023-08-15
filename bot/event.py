@@ -12,7 +12,7 @@ class Event:
     def parse_message_to_event(message_content:str):
         p_message = message_content.lower()
         if p_message.split(':')[0] == '# event':
-                bad_chars = ['#', '-', "*", " ","————————————————————","\n"]
+                bad_chars = ['#', '-', "*", "<",">"," ","————————————————————","\n"]
                 for char in bad_chars:
                         p_message = p_message.replace(char,'')
                 pattern = r'event:(.*)when:(.*)roles:tank:(.*)heal:(.*)dps:(.*)reacttojoin.*'
@@ -49,20 +49,20 @@ class Event:
 """
         for user in self.roster:
              if user.get("role") == 'tank':
-                  string += f"- @{user.get('name')}\n"
+                  string += f"- <@{user.get('name')}>\n"
         string += """
 **HEAL:**
 """
         for user in self.roster:
              if user.get("role") == 'heal':
-                  string += f"- @{user.get('name')}\n"
+                  string += f"- {user.get('name')}\n"
         string+="""
 **DPS:**
 """
 
         for user in self.roster:
              if user.get("role") == 'dps':
-                  string += f"- @{user.get('name')}\n"
+                  string += f"- {user.get('name')}\n"
         string+="""
 ————————————————————
 ### React to join:
@@ -81,8 +81,6 @@ class Event:
         elif reaction_emoji == '⛑️':
                 role = 'heal'
         for item in self.roster:
-                print(item)
-                print(user)
-                if item.get('name') == user.name.lower() and item.get('role') == role:
+                if int(item.get('name')) == int(user.id) and item.get('role') == role:
                         self.roster.remove(item)
                         return self

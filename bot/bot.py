@@ -13,7 +13,9 @@ def run_bot():
     intents.message_content = True
     intents.members = True
     intents.reactions = True
-    client = discord.Client(intents=intents)
+    allowed_mentions = discord.AllowedMentions()
+    allowed_mentions.everyone = True
+    client = discord.Client(intents=intents,allowed_mentions=allowed_mentions)
 
     @client.event
     async def on_ready():
