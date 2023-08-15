@@ -11,11 +11,13 @@ def run_bot():
         TOKEN = t.read()
     intents = discord.Intents.default()
     intents.message_content = True
+    intents.members = True
+    intents.reactions = True
     client = discord.Client(intents=intents)
 
     @client.event
     async def on_ready():
-        logger.info(f'{client.user} is running!')
+        print(f'{client.user} is running!')
 
     @client.event
     async def on_message(message):
@@ -28,12 +30,14 @@ def run_bot():
     
     @client.event
     async def on_reaction_add(reaction, user):
+        print('reaction added')
         new_content = reaction_add_handler(reaction=reaction,user=user)
         message = await client.get_channel(reaction.message.channel.id).fetch_message(reaction.message.id)
         await message.edit(content=new_content)
 
     @client.event
-    async def on_raction_remove(reaction,user):
+    async def on_reaction_remove(reaction,user):
+        print('reaction removed')
         new_content = reaction_remove_handler(reaction=reaction,user=user)
         message = await client.get_channel(reaction.message.channel.id).fetch_message(reaction.message.id)
         await message.edit(content=new_content)
