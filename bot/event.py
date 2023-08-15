@@ -37,8 +37,8 @@ class Event:
         else:
               print('String is not an event!')
                 
-    
     def as_String(self) -> str:
+
         string = f"""
 # Event: **{self.name_of_event}**
 ————————————————————
@@ -72,3 +72,17 @@ class Event:
 - Heal = :helmet_with_cross:
 """
         return string
+    
+    def remove_user(self, reaction_emoji, user):
+        if reaction_emoji == '🛡️':
+                role = 'tank'
+        elif reaction_emoji == '⚔️':
+                role = 'dps'
+        elif reaction_emoji == '⛑️':
+                role = 'heal'
+        for item in self.roster:
+                print(item)
+                print(user)
+                if item.get('name') == user.name.lower() and item.get('role') == role:
+                        self.roster.remove(item)
+                        return self
